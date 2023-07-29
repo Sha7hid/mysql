@@ -30,6 +30,23 @@ export async function createNote(title, contents){
     const id = result[0].insertId
   return getNote(id)
 }
+export async function UpdateNote(id, title, contents) {
+    const result = await pool.query(
+      `
+      UPDATE notes SET title = ?, contents = ? WHERE id = ?;
+      `,
+      [title, contents, id]
+    );
+    return getNote(id)
+    
+  }
+  export async function DeleteNote(id){
+    const result = await pool.query(`
+    delete from notes where id=?
+    `,[id])
+  return result[0]
+}
+  
 // const test = await createNote('test','test')
 // console.log(test)
 // const note = await getNote(1)
